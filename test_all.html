@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="//favicon.ico" /> <!-- not actually present, but will be requested -->
+
+    <title>Prioritization signal test page - all options</title>
+
+    <link rel="preload" href="assets/font1.woff2?preload" as="font" crossorigin type="font/woff2">
+    <link rel="preload" href="assets/font2.woff2?preload" as="font" crossorigin type="font/woff2">
+
+    <link rel="preload" href="assets/script.js?preload" as="script">
+    <link rel="preload" href="assets/style.css?preload" as="style">
+
+    <link rel="preload" href="assets/img1.png?preload" as="image">
+    <link rel="preload" href="assets/img1.png?preload-fetchpriority" as="image" fetchpriority="high">
+
+    <link rel="prefetch" href="assets/script.js?prefetch" as="script">
+
+    <link rel="stylesheet" href="assets/style.css?head" />
+    <link rel="stylesheet" href="assets/fonts.css?head" />
+
+    <link rel="stylesheet" href="assets/style.css?head-print" media="print" />
+
+    <script src="assets/script.js?head"></script>
+    <script src="assets/script.js?head-async" async></script>
+    <script src="assets/script.js?head-defer" defer></script>
+
+    <!-- https://chromestatus.com/feature/5452774595624960 -->
+    <script src="assets/script.js?head-async-blocking" async blocking="render"></script>
+    <script src="assets/script.js?head-defer-blocking" defer blocking="render"></script>
+
+    <script type="text/javascript">
+      fetch('assets/data.json?head')
+      .then((response) => response.text())
+      .then((data) => console.log("head : " + data));
+    </script>
+
+    <!-- will execute a fetch call to data.json when loaded. We might expect the fetch to be lower priority than the inline fetch above. -->
+    <script src="assets/script-fetch.js?head-defer" defer></script>
+
+    <style>
+       @import url("assets/style.css?head-import");
+
+        #p1 {
+            background-image: url(assets/img1.png?css-background);
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <div class="content" role="main">
+        <h1 class="title">Prioritization signal test page - all options</h1>
+
+        <img src="assets/img1.png?visible-eager" width="100" />
+        <img src="assets/img1.png?visible-lazy" width="100" loading="lazy" />
+
+        <img src="assets/img2.svg?image" />
+        <iframe src="assets/img2.svg?iframe" width="50" height="50" ></iframe>
+        <object data="assets/img2.svg?object" width="50" height="50"></object>
+        <embed type="image/svg+xml" src="assets/img2.svg?embed" width="50" height="50" />
+
+        <script src="assets/script.js?body-afterimage"></script>
+
+        <div style="display: none;">
+            <!-- should be requested, even if not shown, though with low priority -->
+            <img src="assets/img1.png?hidden-eager" />
+            <!-- shouldn't be requested at all! -->
+            <img src="assets/img1.png?hidden-lazy" loading="lazy" />
+        </div>
+
+        <video controls poster="assets/img1.png?videoposter">
+          <source src="assets/movie.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <p id="p1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p id="p2">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    </div>
+
+
+    <link rel="stylesheet" href="assets/style.css?bottom" />
+    <script src="assets/script.js?bottom"></script>
+
+
+    <script type="text/javascript">
+      fetch('assets/data.json?bottom-fetchpriority', {
+        priority: "low" // high doesn't change anything for fetch() calls per the Chrome doc
+      })
+      .then((response) => response.text())
+      .then((data) => console.log("bottom-fetchpriority : " + data));
+
+      // try to manually set the priority header
+      fetch('assets/data.json?bottom-priority', { headers: {
+        'priority': 'u=0,i'
+      }})
+      .then((response) => response.text())
+      .then((data) => console.log("bottom-priority : " + data));
+    </script>
+  </body>
+</html>
