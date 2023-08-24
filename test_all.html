@@ -27,6 +27,14 @@
     <script src="assets/script.js?head-async" async></script>
     <script src="assets/script.js?head-defer" defer></script>
 
+    <!-- modules should be the same as defer JS -->
+    <script type="module" src="assets/module.js?head-module"></script>
+
+    <!-- see if imports in modules are the same as direct modules (should be) -->
+    <script type="module">
+      import { test } from "./assets/module.js?head-module-import";
+    </script>
+
     <!-- https://chromestatus.com/feature/5452774595624960 -->
     <script src="assets/script.js?head-async-blocking" async blocking="render"></script>
     <script src="assets/script.js?head-defer-blocking" defer blocking="render"></script>
@@ -35,6 +43,13 @@
       fetch('assets/data.json?head')
       .then((response) => response.text())
       .then((data) => console.log("head : " + data));
+    </script>
+
+    <!-- dynamically injected scripts should be treated as async by default (non-parser blocking) -->
+    <script>
+      const scrEl = document.createElement("script");
+      scrEl.src = "assets/script.js?head-inserted";
+      document.getElementsByTagName("head")[0].appendChild(scrEl);
     </script>
 
     <!-- will execute a fetch call to data.json when loaded. We might expect the fetch to be lower priority than the inline fetch above. -->
@@ -53,6 +68,9 @@
     <div class="wrapper">
       <div class="content" role="main">
         <h1 class="title">Prioritization signal test page - all options</h1>
+
+        <button type="button" onclick="fetch_qlog()">Process qlog</button>
+        <div id="qlog_container">Don't press the button until I say so ;)</div>
 
         <img src="assets/img1.png?visible-eager" width="100" />
         <img src="assets/img1.png?visible-lazy" width="100" loading="lazy" />
@@ -125,6 +143,12 @@
     <link rel="stylesheet" href="assets/style.css?bottom" />
     <script src="assets/script.js?bottom"></script>
 
+    <!-- dynamically injected scripts should be treated as async by default (non-parser blocking) -->
+    <script>
+      const scrElb = document.createElement("script");
+      scrElb.src = "assets/script.js?bottom-inserted";
+      document.getElementsByTagName("head")[0].appendChild(scrElb);
+    </script>
 
     <script type="text/javascript">
       fetch('assets/data.json?bottom-fetchpriority', {
@@ -134,11 +158,26 @@
       .then((data) => console.log("bottom-fetchpriority : " + data));
 
       // try to manually set the priority header
-      fetch('assets/data.json?bottom-priority', { headers: {
-        'priority': 'u=0,i'
+      fetch('assets/data.json?bottom-priority-incremental', { headers: {
+        'priority': 'u=0, i'
       }})
       .then((response) => response.text())
-      .then((data) => console.log("bottom-priority : " + data));
+      .then((data) => console.log("bottom-priority-incremental : " + data));
+
+      // default for fetch in Chrome is incremental=true for fetch, so see if we can disable
+      fetch('assets/data.json?bottom-priority-sequential', { headers: {
+        'priority': 'u=0'
+      }})
+      .then((response) => response.text())
+      .then((data) => console.log("bottom-priority-sequential : " + data));
+
+      fetch('assets/data.json?bottom-priority-invalid', { headers: {
+        'priority': 'u=666, r'
+      }})
+      .then((response) => response.text())
+      .then((data) => console.log("bottom-priority-invalid : " + data));
     </script>
+
+    <script src="assets/qlog-processor.js" defer></script>
   </body>
 </html>
