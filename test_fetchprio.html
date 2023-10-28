@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="//favicon.ico" /> <!-- not actually present, but will be requested -->
+
+    <title>Prioritization signal test page - all options</title>
+
+    <link rel="preload" href="assets/font1.woff2?preload" as="font" crossorigin type="font/woff2">
+    <link rel="preload" href="assets/font1.woff2?preload-prio-high" as="font" crossorigin type="font/woff2" fetchpriority="high">
+    <link rel="preload" href="assets/font1.woff2?preload-prio-low" as="font" crossorigin type="font/woff2" fetchpriority="low">
+
+    <link rel="preload" href="assets/script.js?preload" as="script">
+    <link rel="preload" href="assets/script.js?preload-prio-high" as="script" fetchpriority="high">
+    <link rel="preload" href="assets/script.js?preload-prio-low" as="script" fetchpriority="low">
+
+    <link rel="preload" href="assets/img1.png?preload" as="image">
+    <link rel="preload" href="assets/img1.png?preload-prio-high" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/img1.png?preload-prio-low" as="image" fetchpriority="low">
+
+    <link rel="stylesheet" href="assets/style.css?head" />    
+    <link rel="stylesheet" href="assets/style.css?head-prio-high" fetchpriority="high" />
+    <link rel="stylesheet" href="assets/style.css?head-prio-low" fetchpriority="low" />
+
+    <script src="assets/script.js?head"></script>
+    <script src="assets/script.js?head-async" async></script>
+    <script src="assets/script.js?head-defer" defer></script>
+
+    <script src="assets/script.js?head-prio-high" fetchpriority="high"></script>
+    <script src="assets/script.js?head-async-prio-high" async fetchpriority="high"></script>
+    <script src="assets/script.js?head-defer-prio-high" defer fetchpriority="high"></script>
+
+    <script src="assets/script.js?head-prio-low" fetchpriority="low"></script>
+    <script src="assets/script.js?head-async-prio-low" async fetchpriority="low"></script>
+    <script src="assets/script.js?head-defer-prio-low" defer fetchpriority="low"></script>
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <div class="content" role="main">
+        <h1 class="title">Prioritization signal test page - all options</h1>
+
+        <button type="button" onclick="fetch_qlog()">Process qlog</button>
+        <div id="qlog_container">Don't press the button until I say so ;)</div>
+
+        <img src="assets/img1.png?visible-eager" width="100" />
+        <img src="assets/img1.png?visible-eager-prio-high" width="100" fetchpriority="high"  />
+        <img src="assets/img1.png?visible-eager-prio-low" width="100" fetchpriority="low"  />
+
+        <img src="assets/img1.png?visible-lazy" width="100" loading="lazy" />
+        <img src="assets/img1.png?visible-lazy-prio-high" width="100" loading="lazy" fetchpriority="high" />
+        <img src="assets/img1.png?visible-lazy-prio-low" width="100" loading="lazy" fetchpriority="low" />
+
+        <p id="p1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p id="p2">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+          non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    </div>
+
+
+    <link rel="stylesheet" href="assets/style.css?bottom" />
+    <link rel="stylesheet" href="assets/style.css?bottom-prio-high" fetchpriority="high" />
+    <link rel="stylesheet" href="assets/style.css?bottom-prio-low" fetchpriority="low" />
+
+    <script src="assets/script.js?bottom"></script>
+    <script src="assets/script.js?bottom-prio-high" fetchpriority="high"></script>
+    <script src="assets/script.js?bottom-prio-low" fetchpriority="low"></script>
+  </body>
+</html>
